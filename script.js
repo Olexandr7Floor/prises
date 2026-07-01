@@ -1028,7 +1028,7 @@ function recalcRevisions(){
 ========================================================= */
 function goToStep(n){
   state.step = Math.max(1, Math.min(state.totalSteps, n));
-  document.querySelectorAll(".step").forEach(s => {
+  document.querySelectorAll("#wizard .step").forEach(s => {
     s.classList.toggle("active", Number(s.dataset.step) === state.step);
   });
   document.getElementById("progressFill").style.width = (state.step / state.totalSteps * 100) + "%";

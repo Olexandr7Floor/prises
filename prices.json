@@ -1,0 +1,51 @@
+{
+  "_methodology": "Базові ціни: для кожного типу сайту взято середину ринкових вилок по Україні, Європі (Польща/Німеччина/Франція/Великобританія) та США/Канаді за відкритими джерелами 2026 року, обчислено середнє між трьома регіонами і віднято 10%. Після першого перегляду ціни додатково знижено (базові приблизно на 30-35%, окремі опції — на 20-30%), щоб калькулятор відповідав нижчому за середній рівень ринку, як просив замовник. Це орієнтовний попередній розрахунок, а не фіксована пропозиція.",
+  "currency": "USD",
+  "note": "Цей файл — довідкова копія даних, що реально використовуються у script.js (константа PRICES). Якщо редагуєте ціни, синхронізуйте обидва файли вручну.",
+  "siteTypes": [
+    { "id": "landing", "label": "Landing Page", "label_en": "Landing Page", "base": 350, "baseWeeks": 2 },
+    { "id": "corporate", "label": "Корпоративний сайт", "label_en": "Corporate website", "base": 900, "baseWeeks": 4 },
+    { "id": "company", "label": "Сайт компанії", "label_en": "Company website", "base": 800, "baseWeeks": 4 },
+    { "id": "blog", "label": "Блог", "label_en": "Blog", "base": 450, "baseWeeks": 3 },
+    { "id": "news", "label": "Новинний портал", "label_en": "News portal", "base": 1700, "baseWeeks": 7 },
+    { "id": "ecommerce", "label": "Інтернет-магазин", "label_en": "E-commerce store", "base": 2100, "baseWeeks": 8 },
+    { "id": "crm", "label": "CRM", "label_en": "CRM", "base": 3600, "baseWeeks": 12 },
+    { "id": "lms", "label": "LMS", "label_en": "LMS", "base": 3200, "baseWeeks": 10 },
+    { "id": "portal", "label": "Портал", "label_en": "Portal", "base": 2850, "baseWeeks": 10 },
+    { "id": "catalog", "label": "Каталог", "label_en": "Catalog", "base": 850, "baseWeeks": 5 },
+    { "id": "booking", "label": "Сервіс бронювання", "label_en": "Booking service", "base": 1800, "baseWeeks": 7 },
+    { "id": "realestate", "label": "Сайт нерухомості", "label_en": "Real estate website", "base": 1350, "baseWeeks": 6 },
+    { "id": "auto", "label": "Автосайт", "label_en": "Automotive website", "base": 1300, "baseWeeks": 6 },
+    { "id": "medical", "label": "Медичний сайт", "label_en": "Medical website", "base": 1400, "baseWeeks": 6 },
+    { "id": "education", "label": "Освітній сайт", "label_en": "Education website", "base": 1250, "baseWeeks": 6 },
+    { "id": "restaurant", "label": "Сайт ресторану", "label_en": "Restaurant website", "base": 700, "baseWeeks": 4 },
+    { "id": "personalbrand", "label": "Особистий бренд", "label_en": "Personal brand", "base": 550, "baseWeeks": 3 },
+    { "id": "portfolio", "label": "Портфоліо", "label_en": "Portfolio", "base": 450, "baseWeeks": 3 },
+    { "id": "webapp", "label": "Веб-додаток", "label_en": "Web application", "base": 3900, "baseWeeks": 12 },
+    { "id": "custom", "label": "Індивідуальна розробка", "label_en": "Custom development", "base": 1950, "baseWeeks": 8 }
+  ],
+  "removed_by_client_request": ["erp", "marketplace", "saas", "3d design/content add-ons", "video content service", "VIP support tier"],
+  "designTiers": [
+    { "id": "template", "label": "Шаблон", "label_en": "Template", "multiplier": 0.7 },
+    { "id": "custom", "label": "Індивідуальний дизайн", "label_en": "Custom design", "multiplier": 1.0 },
+    { "id": "premium", "label": "Premium UI", "label_en": "Premium UI", "multiplier": 1.2 },
+    { "id": "luxury", "label": "Luxury Design", "label_en": "Luxury Design", "multiplier": 1.5 }
+  ],
+  "designAddons": [
+    { "id": "motion", "label": "Motion Design", "price": 260 },
+    { "id": "illustrations", "label": "Унікальні ілюстрації (AI)", "label_en": "Custom illustrations (AI)", "price": 220 },
+    { "id": "lottie", "label": "Lottie-анімації", "price": 190 },
+    { "id": "microanim", "label": "Мікроанімації", "price": 110 }
+  ],
+  "support": [
+    { "id": "none", "label": "Без підтримки", "price": 0 },
+    { "id": "m1", "label": "1 місяць", "price": 45 },
+    { "id": "m3", "label": "3 місяці", "price": 110 },
+    { "id": "m6", "label": "6 місяців", "price": 200 },
+    { "id": "m12", "label": "12 місяців", "price": 360 }
+  ],
+  "telegram_delivery": {
+    "target_chat_id": "423617460",
+    "note": "Токен бота зберігається лише всередині script.js у частково обфускованому вигляді (base64, розбитий на 2 фрагменти), а не тут. Це не є повноцінним захистом — будь-хто, хто відкриє DevTools під час реальної відправки форми, побачить запит до api.telegram.org. Справжня конфіденційність токена можлива тільки через серверний проксі."
+  }
+}

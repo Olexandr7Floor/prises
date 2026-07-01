@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="uk" id="htmlRoot">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">Калькулятор вартості розробки сайту</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ===== HEADER / PROGRESS ===== -->
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-mark">&lt;/&gt;</span>
+      <span class="brand-name">Web Estimate</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <span class="progress-label" id="progressLabel">Крок 1 з 9</span>
+    </div>
+    <div class="lang-switch" id="langSwitch">
+      <button class="lang-btn active" data-lang="uk" id="langBtnUk">UA</button>
+      <button class="lang-btn" data-lang="en" id="langBtnEn">EN</button>
+    </div>
+  </header>
+
+  <div class="layout">
+
+    <!-- ===== LEFT: WIZARD ===== -->
+    <main class="wizard" id="wizard">
+
+      <!-- STEP 1: SITE TYPE -->
+      <section class="step" data-step="1">
+        <div class="step-eyebrow" id="s1-eyebrow">Крок 01 / Основа</div>
+        <h2 id="s1-title">Який сайт потрібен?</h2>
+        <p class="step-sub" id="s1-sub">Оберіть тип проєкту — від цього рахуємо базову вартість і терміни.</p>
+        <div class="grid grid-type" id="siteTypeGrid"></div>
+      </section>
+
+      <!-- STEP 2: PAGES -->
+      <section class="step" data-step="2">
+        <div class="step-eyebrow" id="s2-eyebrow">Крок 02 / Обсяг</div>
+        <h2 id="s2-title">Скільки сторінок?</h2>
+        <p class="step-sub" id="s2-sub">Орієнтовна кількість унікальних екранів чи розділів сайту.</p>
+        <div class="chip-row" id="pagesRow"></div>
+      </section>
+
+      <!-- STEP 3: DESIGN -->
+      <section class="step" data-step="3">
+        <div class="step-eyebrow" id="s3-eyebrow">Крок 03 / Дизайн</div>
+        <h2 id="s3-title">Рівень дизайну</h2>
+        <p class="step-sub" id="s3-sub">Наскільки унікальним і опрацьованим має бути вигляд сайту.</p>
+        <div class="grid grid-design" id="designTierGrid"></div>
+        <h3 class="sub-h" id="s3-subh">Додатково до дизайну</h3>
+        <div class="grid grid-addons" id="designAddonsGrid"></div>
+      </section>
+
+      <!-- STEP 4: FUNCTIONS -->
+      <section class="step" data-step="4">
+        <div class="step-eyebrow" id="s4-eyebrow">Крок 04 / Функціонал</div>
+        <h2 id="s4-title">Що має вміти сайт?</h2>
+        <p class="step-sub" id="s4-sub">Оберіть боти, оплати, інтеграції та інші можливості — усе одразу впливає на ціну справа.</p>
+        <div id="functionGroups"></div>
+      </section>
+
+      <!-- STEP 5: SECURITY -->
+      <section class="step" data-step="5">
+        <div class="step-eyebrow" id="s5-eyebrow">Крок 05 / Безпека</div>
+        <h2 id="s5-title">Захист сайту</h2>
+        <p class="step-sub" id="s5-sub">Базові речі на кшталт SSL зазвичай варто брати завжди.</p>
+        <div class="grid grid-check" id="securityGrid"></div>
+      </section>
+
+      <!-- STEP 6: CONTENT -->
+      <section class="step" data-step="6">
+        <div class="step-eyebrow" id="s6-eyebrow">Крок 06 / Контент</div>
+        <h2 id="s6-title">Наповнення сайту</h2>
+        <p class="step-sub" id="s6-sub">Якщо потрібні готові тексти чи фото — відзначте тут.</p>
+        <div class="grid grid-check" id="contentGrid"></div>
+      </section>
+
+      <!-- STEP 7: OPTIMIZATION -->
+      <section class="step" data-step="7">
+        <div class="step-eyebrow" id="s7-eyebrow">Крок 07 / Швидкість</div>
+        <h2 id="s7-title">Оптимізація продуктивності</h2>
+        <p class="step-sub" id="s7-sub">Базова швидкодія входить завжди. Це — поглиблений пакет для важких проєктів.</p>
+        <div class="grid grid-check" id="optimizationGrid"></div>
+      </section>
+
+      <!-- STEP 8: SUPPORT -->
+      <section class="step" data-step="8">
+        <div class="step-eyebrow" id="s8-eyebrow">Крок 08 / Підтримка</div>
+        <h2 id="s8-title">Супровід після запуску</h2>
+        <p class="step-sub" id="s8-sub">Оплачується окремо від разової вартості розробки, помісячно.</p>
+        <div class="chip-row" id="supportRow"></div>
+      </section>
+
+      <!-- STEP 9: CONTACT -->
+      <section class="step" data-step="9">
+        <div class="step-eyebrow" id="s9-eyebrow">Крок 09 / Фінал</div>
+        <h2 id="s9-title">Отримати комерційну пропозицію</h2>
+        <p class="step-sub" id="s9-sub">Залиште контакти — заявка одразу прийде нам у Telegram.</p>
+
+        <form class="contact-form" id="contactForm" novalidate>
+          <div class="field">
+            <label for="fName" id="lbl-fName">Ім'я *</label>
+            <input type="text" id="fName" name="name" required>
+            <span class="field-error" id="err-fName"></span>
+          </div>
+          <div class="field">
+            <label for="fPhone" id="lbl-fPhone">Телефон *</label>
+            <input type="tel" id="fPhone" name="phone" placeholder="+380 __ ___ __ __" required>
+            <span class="field-error" id="err-fPhone"></span>
+          </div>
+          <div class="field">
+            <label for="fTelegram" id="lbl-fTelegram">Telegram</label>
+            <input type="text" id="fTelegram" name="telegram" placeholder="@username">
+          </div>
+          <div class="field">
+            <label for="fEmail" id="lbl-fEmail">Email</label>
+            <input type="email" id="fEmail" name="email" placeholder="you@company.com">
+          </div>
+          <div class="field">
+            <label for="fCompany" id="lbl-fCompany">Компанія</label>
+            <input type="text" id="fCompany" name="company">
+          </div>
+          <div class="field field-wide">
+            <label for="fComment" id="lbl-fComment">Коментар</label>
+            <textarea id="fComment" name="comment" rows="3"></textarea>
+          </div>
+        </form>
+
+        <div class="finish-actions">
+          <button class="btn btn-primary" id="btnSubmit">Отримати пропозицію</button>
+          <button class="btn btn-ghost" id="btnDownloadPdf">Завантажити PDF</button>
+        </div>
+        <p class="finish-note" id="finishNote"></p>
+      </section>
+
+      <!-- NAV BUTTONS -->
+      <div class="wizard-nav">
+        <button class="btn btn-ghost" id="btnPrev">← Назад</button>
+        <button class="btn btn-primary" id="btnNext">Далі →</button>
+      </div>
+
+    </main>
+
+    <!-- ===== RIGHT: STICKY SUMMARY ===== -->
+    <aside class="summary" id="summary">
+      <div class="summary-inner">
+        <div class="summary-topbar"></div>
+
+        <div class="summary-head">
+          <span class="summary-eyebrow" id="summaryEyebrow">// проєкт-конфігурація</span>
+          <span class="badge" id="complexityBadge">Простий</span>
+        </div>
+
+        <p class="summary-desc" id="summaryDesc">Оберіть тип сайту, щоб почати збірку проєкту.</p>
+
+        <div class="price-block">
+          <span class="price-label" id="priceLabel">Орієнтовна вартість</span>
+          <div class="price-main"><span class="price-currency">$</span><span class="price-number" id="priceMain">0</span></div>
+          <div class="price-range">
+            <span id="priceMinWrap">мін <b id="priceMin">$0</b></span>
+            <span id="priceAvgWrap">сер <b id="priceAvg">$0</b></span>
+            <span id="priceMaxWrap">макс <b id="priceMax">$0</b></span>
+          </div>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat">
+            <span class="stat-value" id="statWeeks">—</span>
+            <span class="stat-label" id="statWeeksLabel">термін</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value" id="statCount">0</span>
+            <span class="stat-label" id="statCountLabel">опцій обрано</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value" id="statSavings">$0</span>
+            <span class="stat-label" id="statSavingsLabel">економія пакетом</span>
+          </div>
+        </div>
+
+        <div class="receipt" id="receiptList">
+          <div class="receipt-empty" id="receiptEmpty">Тут з'являтиметься склад вашого проєкту</div>
+        </div>
+
+        <div class="support-line" id="supportLine" style="display:none;">
+          <span id="supportLineLabel">Підтримка</span>
+          <span id="supportPriceLine">$0</span>
+        </div>
+
+        <button class="btn btn-primary btn-cta" id="btnCta">Отримати комерційну пропозицію</button>
+        <span class="cta-sub" id="ctaSub">Фінальна ціна узгоджується після короткого брифу</span>
+      </div>
+    </aside>
+
+  </div>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<script src="script.js"></script>
+</body>
+</html>

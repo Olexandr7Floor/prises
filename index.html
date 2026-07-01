@@ -18,7 +18,7 @@
       <span class="brand-mark">&lt;/&gt;</span>
       <span class="brand-name">Web Estimate</span>
     </div>
-    <div class="progress-wrap">
+    <div class="progress-wrap" id="progressWrap">
       <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
       <span class="progress-label" id="progressLabel">Крок 1 з 9</span>
     </div>
@@ -28,6 +28,18 @@
     </div>
   </header>
 
+  <!-- ===== MODE SWITCH: NEW SITE / REVISIONS ===== -->
+  <div class="mode-switch-wrap">
+    <div class="mode-switch" id="modeSwitch">
+      <button class="mode-btn active" data-mode="newsite" id="modeBtnNew">Новий сайт</button>
+      <button class="mode-btn" data-mode="revisions" id="modeBtnRev">Правки на сайті</button>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MODE 1: NEW SITE CALCULATOR
+  ========================================================== -->
+  <div class="mode-panel active" id="modeNewSite">
   <div class="layout">
 
     <!-- ===== LEFT: WIZARD ===== -->
@@ -201,6 +213,117 @@
     </aside>
 
   </div>
+  </div>
+  <!-- ===== END MODE 1 ===== -->
+
+  <!-- =========================================================
+       MODE 2: REVISIONS ON EXISTING SITE
+  ========================================================== -->
+  <div class="mode-panel" id="modeRevisions">
+  <div class="layout">
+
+    <main class="wizard" id="revWizard">
+      <section class="step active">
+        <div class="step-eyebrow" id="r1-eyebrow">Правки на сайті</div>
+        <h2 id="r1-title">Що потрібно доробити?</h2>
+        <p class="step-sub" id="r1-sub">Оберіть, які зміни потрібні на вже готовому сайті — оцінка оновлюється одразу справа.</p>
+        <div class="grid grid-check" id="revEditTypesGrid"></div>
+
+        <h3 class="sub-h" id="r2-subh">Обсяг правок</h3>
+        <div class="chip-row" id="revVolumeRow"></div>
+
+        <h3 class="sub-h" id="r3-subh">Терміновість</h3>
+        <div class="chip-row" id="revUrgencyRow"></div>
+
+        <h3 class="sub-h" id="r4-subh">Сайт і контакти</h3>
+        <form class="contact-form" id="revContactForm" novalidate>
+          <div class="field field-wide">
+            <label for="rUrl" id="lbl-rUrl">Посилання на сайт *</label>
+            <input type="text" id="rUrl" name="url" placeholder="https://example.com" required>
+            <span class="field-error" id="err-rUrl"></span>
+          </div>
+          <div class="field">
+            <label for="rName" id="lbl-rName">Ім'я *</label>
+            <input type="text" id="rName" name="name" required>
+            <span class="field-error" id="err-rName"></span>
+          </div>
+          <div class="field">
+            <label for="rPhone" id="lbl-rPhone">Телефон *</label>
+            <input type="tel" id="rPhone" name="phone" placeholder="+380 __ ___ __ __" required>
+            <span class="field-error" id="err-rPhone"></span>
+          </div>
+          <div class="field">
+            <label for="rTelegram" id="lbl-rTelegram">Telegram</label>
+            <input type="text" id="rTelegram" name="telegram" placeholder="@username">
+          </div>
+          <div class="field">
+            <label for="rEmail" id="lbl-rEmail">Email</label>
+            <input type="email" id="rEmail" name="email" placeholder="you@company.com">
+          </div>
+          <div class="field field-wide">
+            <label for="rComment" id="lbl-rComment">Опис правок *</label>
+            <textarea id="rComment" name="comment" rows="4" required></textarea>
+            <span class="field-error" id="err-rComment"></span>
+          </div>
+        </form>
+
+        <div class="finish-actions">
+          <button class="btn btn-primary" id="revBtnSubmit">Надіслати заявку</button>
+          <button class="btn btn-ghost" id="revBtnPdf">Завантажити PDF</button>
+        </div>
+        <p class="finish-note" id="revFinishNote"></p>
+      </section>
+    </main>
+
+    <aside class="summary" id="revSummary">
+      <div class="summary-inner">
+        <div class="summary-topbar"></div>
+
+        <div class="summary-head">
+          <span class="summary-eyebrow" id="revSummaryEyebrow">// заявка на правки</span>
+          <span class="badge" id="revBadge">—</span>
+        </div>
+
+        <p class="summary-desc" id="revSummaryDesc">Оберіть, що потрібно змінити на сайті.</p>
+
+        <div class="price-block">
+          <span class="price-label" id="revPriceLabel">Орієнтовна вартість правок</span>
+          <div class="price-main"><span class="price-currency">$</span><span class="price-number" id="revPriceMain">0</span></div>
+          <div class="price-range">
+            <span id="revPriceMinWrap">мін <b id="revPriceMin">$0</b></span>
+            <span id="revPriceAvgWrap">сер <b id="revPriceAvg">$0</b></span>
+            <span id="revPriceMaxWrap">макс <b id="revPriceMax">$0</b></span>
+          </div>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat">
+            <span class="stat-value" id="revStatTime">—</span>
+            <span class="stat-label" id="revStatTimeLabel">термін</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value" id="revStatCount">0</span>
+            <span class="stat-label" id="revStatCountLabel">правок обрано</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value" id="revStatUrgency">—</span>
+            <span class="stat-label" id="revStatUrgencyLabel">терміновість</span>
+          </div>
+        </div>
+
+        <div class="receipt" id="revReceiptList">
+          <div class="receipt-empty" id="revReceiptEmpty">Тут з'являтиметься список правок</div>
+        </div>
+
+        <button class="btn btn-primary btn-cta" id="revBtnCta">Надіслати заявку на правки</button>
+        <span class="cta-sub" id="revCtaSub">Мінімальне замовлення — $15</span>
+      </div>
+    </aside>
+
+  </div>
+  </div>
+  <!-- ===== END MODE 2 ===== -->
+
 </div>
 
 <div class="toast-stack" id="toastStack"></div>

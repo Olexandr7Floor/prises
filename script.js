@@ -175,6 +175,46 @@ const PRICES = {
 };
 
 /* =========================================================
+   REVISIONS DATA (edits on an existing site)
+========================================================= */
+const REVISIONS = {
+  editTypes: [
+    { id:"content", label:"Редагування тексту", label_en:"Text edits", price:15,
+      hint:"Заміна чи правка текстів на сторінках", hint_en:"Replacing or editing text on pages" },
+    { id:"media", label:"Заміна зображень / медіа", label_en:"Replace images / media", price:12,
+      hint:"Оновлення фото, банерів, відео", hint_en:"Updating photos, banners, video" },
+    { id:"style", label:"Зміна кольорів / стилів", label_en:"Colors / styling changes", price:20,
+      hint:"Правки візуального оформлення елементів", hint_en:"Tweaking the visual styling of elements" },
+    { id:"newsection", label:"Нова секція на сторінці", label_en:"New section on a page", price:60,
+      hint:"Додавання нового блоку в існуючу сторінку", hint_en:"Adding a new block to an existing page" },
+    { id:"newpage", label:"Нова сторінка на сайті", label_en:"New page on the site", price:120,
+      hint:"Створення додаткової сторінки в тому ж стилі", hint_en:"Creating an extra page in the same style" },
+    { id:"bugfix", label:"Виправлення бага", label_en:"Bug fix", price:35,
+      hint:"Усунення некоректної роботи елемента", hint_en:"Fixing something that works incorrectly" },
+    { id:"mobile", label:"Адаптація під мобільні", label_en:"Mobile adaptation", price:70,
+      hint:"Виправлення відображення на телефонах", hint_en:"Fixing display issues on phones" },
+    { id:"speed", label:"Прискорення сайту", label_en:"Site speed-up", price:90,
+      hint:"Оптимізація швидкодії існуючих сторінок", hint_en:"Optimizing the speed of existing pages" },
+    { id:"integration", label:"Форма / бот / оплата", label_en:"Form / bot / payment", price:80,
+      hint:"Додавання чи зміна форми, бота або оплати", hint_en:"Adding or changing a form, bot, or payment" },
+    { id:"consultation", label:"Консультація / аудит", label_en:"Consultation / audit", price:25,
+      hint:"Розбір сайту та рекомендації", hint_en:"Reviewing the site and giving recommendations" },
+    { id:"other", label:"Інше (опишіть у коментарі)", label_en:"Other (describe in the comment)", price:0,
+      hint:"Вартість визначається індивідуально після опису", hint_en:"Price is determined individually after your description" }
+  ],
+  volume: [
+    { id:"small", label:"1–2 правки", label_en:"1–2 edits", multiplier:1.0 },
+    { id:"medium", label:"3–7 правок", label_en:"3–7 edits", multiplier:1.8 },
+    { id:"large", label:"8+ правок", label_en:"8+ edits", multiplier:3.0 }
+  ],
+  urgency: [
+    { id:"standard", label:"Стандартно (2–4 дні)", label_en:"Standard (2–4 days)", short:"Стандартно", short_en:"Standard", multiplier:1.0 },
+    { id:"urgent", label:"Терміново (до 24 год) · +50%", label_en:"Urgent (within 24h) · +50%", short:"Терміново", short_en:"Urgent", multiplier:1.5 },
+    { id:"asap", label:"Сьогодні · +100%", label_en:"Today · +100%", short:"Сьогодні", short_en:"Today", multiplier:2.0 }
+  ]
+};
+
+/* =========================================================
    UI TEXT (static strings)
 ========================================================= */
 const UI_TEXT = {
@@ -217,7 +257,30 @@ const UI_TEXT = {
     pdfComposition: "Склад проєкту", pdfItem: "Позиція", pdfCost: "Вартість", pdfTotal: "Разом",
     pdfContact: "Контактні дані", pdfPrintHint: "Це вікно можна зберегти як PDF через Ctrl+P → «Зберегти як PDF».",
     summaryDesc: (typeLabel, pagesLabel, designLabel, count) =>
-      `${typeLabel}, ${pagesLabel} сторінок, дизайн: ${designLabel.toLowerCase()}. ${count ? `Додатково обрано ${count} опцій.` : "Додаткові опції поки не обрані."}`
+      `${typeLabel}, ${pagesLabel} сторінок, дизайн: ${designLabel.toLowerCase()}. ${count ? `Додатково обрано ${count} опцій.` : "Додаткові опції поки не обрані."}`,
+
+    modeNew: "Новий сайт", modeRev: "Правки на сайті",
+    r1eyebrow: "Правки на сайті", r1title: "Що потрібно доробити?",
+    r1sub: "Оберіть, які зміни потрібні на вже готовому сайті — оцінка оновлюється одразу справа.",
+    r2subh: "Обсяг правок", r3subh: "Терміновість", r4subh: "Сайт і контакти",
+    lblUrl: "Посилання на сайт *", lblRComment: "Опис правок *",
+    revBtnSubmit: "Надіслати заявку", revBtnPdf: "Завантажити PDF",
+    revSummaryEyebrow: "// заявка на правки",
+    revSummaryDescEmpty: "Оберіть, що потрібно змінити на сайті.",
+    revSummaryDesc: (count, volumeLabel, urgencyShort) => `${count} тип${count === 1 ? "" : "и"} правок · обсяг: ${volumeLabel} · ${urgencyShort}`,
+    revPriceLabel: "Орієнтовна вартість правок",
+    revStatTime: "термін", revStatCount: "правок обрано", revStatUrgency: "терміновість",
+    revReceiptEmpty: "Тут з'являтиметься список правок",
+    revBtnCta: "Надіслати заявку на правки",
+    revCtaSub: "Мінімальне замовлення — $15",
+    revBadgeQuick: "Точкова правка", revBadgeMedium: "Середній обсяг", revBadgeLarge: "Великий обсяг",
+    revTimeToday: "сьогодні", revTimeUrgent: "до 24 год", revTimeSmall: "1–2 дні", revTimeMedium: "2–4 дні", revTimeLarge: "4–7 днів",
+    revSurchargeLabel: "Обсяг і терміновість",
+    revCustomQuote: "за домовл.",
+    errUrl: "Вкажіть посилання на сайт", errComment: "Опишіть, що потрібно змінити", errRevType: "Оберіть хоча б один тип правки",
+    revToastSuccess: "Заявку на правки надіслано в Telegram!",
+    revFinishNote: (name, price) => `Дякуємо, ${name || "друже"}! Заявку на правки надіслано (орієнтовно $${price}).`,
+    revPdfTitle: "Заявка на правки сайту"
   },
   en: {
     pageTitle: "Website Development Cost Calculator",
@@ -258,7 +321,30 @@ const UI_TEXT = {
     pdfComposition: "Project composition", pdfItem: "Item", pdfCost: "Cost", pdfTotal: "Total",
     pdfContact: "Contact details", pdfPrintHint: "You can save this window as a PDF via Ctrl+P → \"Save as PDF\".",
     summaryDesc: (typeLabel, pagesLabel, designLabel, count) =>
-      `${typeLabel}, ${pagesLabel} pages, design: ${designLabel.toLowerCase()}. ${count ? `${count} extra options selected.` : "No extra options selected yet."}`
+      `${typeLabel}, ${pagesLabel} pages, design: ${designLabel.toLowerCase()}. ${count ? `${count} extra options selected.` : "No extra options selected yet."}`,
+
+    modeNew: "New site", modeRev: "Site revisions",
+    r1eyebrow: "Site revisions", r1title: "What needs updating?",
+    r1sub: "Choose what changes you need on an existing site — the estimate updates on the right instantly.",
+    r2subh: "Scope of changes", r3subh: "Urgency", r4subh: "Site and contacts",
+    lblUrl: "Site URL *", lblRComment: "Describe the changes *",
+    revBtnSubmit: "Send request", revBtnPdf: "Download PDF",
+    revSummaryEyebrow: "// revision request",
+    revSummaryDescEmpty: "Choose what needs to change on the site.",
+    revSummaryDesc: (count, volumeLabel, urgencyShort) => `${count} edit type${count === 1 ? "" : "s"} · scope: ${volumeLabel} · ${urgencyShort}`,
+    revPriceLabel: "Estimated revision cost",
+    revStatTime: "timeline", revStatCount: "edits selected", revStatUrgency: "urgency",
+    revReceiptEmpty: "Your list of edits will appear here",
+    revBtnCta: "Send revision request",
+    revCtaSub: "Minimum order — $15",
+    revBadgeQuick: "Quick fix", revBadgeMedium: "Medium scope", revBadgeLarge: "Large scope",
+    revTimeToday: "today", revTimeUrgent: "within 24h", revTimeSmall: "1–2 days", revTimeMedium: "2–4 days", revTimeLarge: "4–7 days",
+    revSurchargeLabel: "Scope & urgency",
+    revCustomQuote: "custom",
+    errUrl: "Please enter the site URL", errComment: "Please describe what needs to change", errRevType: "Choose at least one edit type",
+    revToastSuccess: "Revision request sent to Telegram!",
+    revFinishNote: (name, price) => `Thank you, ${name || "there"}! Your revision request has been sent (approx. $${price}).`,
+    revPdfTitle: "Site revision request"
   }
 };
 
@@ -292,6 +378,7 @@ const state = {
   step: 1,
   totalSteps: 9,
   lang: "uk",
+  mode: "newsite",
   siteType: null,
   pages: "5",
   pagesMemory: "5",
@@ -301,25 +388,33 @@ const state = {
   security: new Set(["ssl"]),
   content: new Set(),
   optimization: false,
-  support: "none"
+  support: "none",
+  revEditTypes: new Set(),
+  revVolume: "small",
+  revUrgency: "standard"
 };
 
 const fmt = (n) => Math.round(n).toLocaleString("en-US");
 const t = () => UI_TEXT[state.lang];
 const L = (item) => state.lang === "en" && item.label_en ? item.label_en : item.label;
 const H = (item) => state.lang === "en" && item.hint_en ? item.hint_en : (item.hint || "");
+const Ls = (item) => state.lang === "en" && item.short_en ? item.short_en : item.short;
 
 /* =========================================================
    INIT
 ========================================================= */
 function init(){
   bindLangSwitch();
+  bindModeSwitch();
   applyStaticText();
   renderAll();
+  renderRevisions();
   bindNav();
   bindForm();
+  bindRevForm();
   goToStep(1);
   recalc();
+  recalcRevisions();
 }
 
 function renderAll(){
@@ -349,8 +444,28 @@ function setLang(lang){
   document.getElementById("htmlRoot").lang = lang;
   applyStaticText();
   renderAll();
+  renderRevisions();
   goToStep(state.step);
   recalc();
+  recalcRevisions();
+}
+
+/* =========================================================
+   MODE SWITCH (New site / Revisions)
+========================================================= */
+function bindModeSwitch(){
+  document.getElementById("modeBtnNew").addEventListener("click", () => setMode("newsite"));
+  document.getElementById("modeBtnRev").addEventListener("click", () => setMode("revisions"));
+}
+function setMode(mode){
+  if(state.mode === mode) return;
+  state.mode = mode;
+  document.getElementById("modeBtnNew").classList.toggle("active", mode === "newsite");
+  document.getElementById("modeBtnRev").classList.toggle("active", mode === "revisions");
+  document.getElementById("modeNewSite").classList.toggle("active", mode === "newsite");
+  document.getElementById("modeRevisions").classList.toggle("active", mode === "revisions");
+  document.getElementById("progressWrap").style.display = mode === "newsite" ? "flex" : "none";
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function applyStaticText(){
@@ -407,6 +522,31 @@ function applyStaticText(){
   document.getElementById("ctaSub").textContent = T.ctaSub;
 
   document.getElementById("progressLabel").textContent = T.stepOf(state.step, state.totalSteps);
+
+  document.getElementById("modeBtnNew").textContent = T.modeNew;
+  document.getElementById("modeBtnRev").textContent = T.modeRev;
+
+  document.getElementById("r1-eyebrow").textContent = T.r1eyebrow;
+  document.getElementById("r1-title").textContent = T.r1title;
+  document.getElementById("r1-sub").textContent = T.r1sub;
+  document.getElementById("r2-subh").textContent = T.r2subh;
+  document.getElementById("r3-subh").textContent = T.r3subh;
+  document.getElementById("r4-subh").textContent = T.r4subh;
+  document.getElementById("lbl-rUrl").textContent = T.lblUrl;
+  document.getElementById("lbl-rName").textContent = T.lblName;
+  document.getElementById("lbl-rPhone").textContent = T.lblPhone;
+  document.getElementById("lbl-rTelegram").textContent = T.lblTelegram;
+  document.getElementById("lbl-rEmail").textContent = T.lblEmail;
+  document.getElementById("lbl-rComment").textContent = T.lblRComment;
+  document.getElementById("revBtnSubmit").textContent = T.revBtnSubmit;
+  document.getElementById("revBtnPdf").textContent = T.revBtnPdf;
+  document.getElementById("revSummaryEyebrow").textContent = T.revSummaryEyebrow;
+  document.getElementById("revPriceLabel").textContent = T.revPriceLabel;
+  document.getElementById("revStatTimeLabel").textContent = T.revStatTime;
+  document.getElementById("revStatCountLabel").textContent = T.revStatCount;
+  document.getElementById("revStatUrgencyLabel").textContent = T.revStatUrgency;
+  document.getElementById("revBtnCta").textContent = T.revBtnCta;
+  document.getElementById("revCtaSub").textContent = T.revCtaSub;
 }
 
 /* =========================================================
@@ -620,6 +760,71 @@ function toggleSet(set, id){
 }
 
 /* =========================================================
+   RENDER: REVISIONS TAB
+========================================================= */
+function renderRevisions(){
+  renderRevEditTypes();
+  renderRevVolume();
+  renderRevUrgency();
+}
+
+function renderRevEditTypes(){
+  const grid = document.getElementById("revEditTypesGrid");
+  grid.innerHTML = "";
+  REVISIONS.editTypes.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "card" + (state.revEditTypes.has(item.id) ? " selected" : "");
+    const priceText = item.price > 0 ? `+$${fmt(item.price)}` : t().revCustomQuote;
+    card.innerHTML = `
+      <div class="card-check"></div>
+      <div class="card-title">${L(item)}</div>
+      <div class="card-hint">${H(item)}</div>
+      <div class="card-price">${priceText}</div>
+    `;
+    card.addEventListener("click", () => {
+      toggleSet(state.revEditTypes, item.id);
+      card.classList.toggle("selected");
+      recalcRevisions();
+    });
+    grid.appendChild(card);
+  });
+}
+
+function renderRevVolume(){
+  const row = document.getElementById("revVolumeRow");
+  row.innerHTML = "";
+  REVISIONS.volume.forEach(v => {
+    const chip = document.createElement("div");
+    chip.className = "chip" + (v.id === state.revVolume ? " selected" : "");
+    chip.textContent = L(v);
+    chip.addEventListener("click", () => {
+      state.revVolume = v.id;
+      [...row.children].forEach(c => c.classList.remove("selected"));
+      chip.classList.add("selected");
+      recalcRevisions();
+    });
+    row.appendChild(chip);
+  });
+}
+
+function renderRevUrgency(){
+  const row = document.getElementById("revUrgencyRow");
+  row.innerHTML = "";
+  REVISIONS.urgency.forEach(u => {
+    const chip = document.createElement("div");
+    chip.className = "chip" + (u.id === state.revUrgency ? " selected" : "");
+    chip.textContent = L(u);
+    chip.addEventListener("click", () => {
+      state.revUrgency = u.id;
+      [...row.children].forEach(c => c.classList.remove("selected"));
+      chip.classList.add("selected");
+      recalcRevisions();
+    });
+    row.appendChild(chip);
+  });
+}
+
+/* =========================================================
    PRICE ENGINE
 ========================================================= */
 function computeTotals(){
@@ -680,17 +885,23 @@ function complexityInfo(count, total){
   return { label:T.simple, cls:"" };
 }
 
-let animFrame = null;
-function animatePrice(el, from, to, duration = 500){
-  if(animFrame) cancelAnimationFrame(animFrame);
+let animFrameMain = null;
+let animFrameRev = null;
+function animatePrice(el, from, to, frameKey = "main", duration = 500){
+  const cancel = frameKey === "main" ? () => animFrameMain && cancelAnimationFrame(animFrameMain) : () => animFrameRev && cancelAnimationFrame(animFrameRev);
+  cancel();
   const start = performance.now();
   function tick(now){
     const p = Math.min(1, (now - start) / duration);
     const eased = 1 - Math.pow(1 - p, 3);
     el.textContent = fmt(from + (to - from) * eased);
-    if(p < 1) animFrame = requestAnimationFrame(tick);
+    if(p < 1){
+      const id = requestAnimationFrame(tick);
+      if(frameKey === "main") animFrameMain = id; else animFrameRev = id;
+    }
   }
-  animFrame = requestAnimationFrame(tick);
+  const id = requestAnimationFrame(tick);
+  if(frameKey === "main") animFrameMain = id; else animFrameRev = id;
 }
 
 let lastPrice = 0;
@@ -699,7 +910,7 @@ function recalc(){
   const r = computeTotals();
 
   const priceMainEl = document.getElementById("priceMain");
-  animatePrice(priceMainEl, lastPrice, r.total);
+  animatePrice(priceMainEl, lastPrice, r.total, "main");
   lastPrice = r.total;
 
   document.getElementById("priceMinWrap").innerHTML = `${T.min} <b id="priceMin">$${fmt(r.min)}</b>`;
@@ -730,6 +941,86 @@ function recalc(){
   } else {
     supportLine.style.display = "none";
   }
+}
+
+/* =========================================================
+   REVISIONS PRICE ENGINE
+========================================================= */
+function computeRevisionTotals(){
+  const volume = REVISIONS.volume.find(v => v.id === state.revVolume);
+  const urgency = REVISIONS.urgency.find(u => u.id === state.revUrgency);
+  const lines = [];
+  let baseSum = 0;
+
+  REVISIONS.editTypes.forEach(item => {
+    if(!state.revEditTypes.has(item.id)) return;
+    if(item.price > 0){
+      baseSum += item.price;
+      lines.push({ label: L(item), value: item.price });
+    } else {
+      lines.push({ label: L(item), value: null });
+    }
+  });
+
+  const count = state.revEditTypes.size;
+  const total = baseSum * volume.multiplier * urgency.multiplier;
+  const surcharge = total - baseSum;
+  if(count > 0 && surcharge > 0.5){
+    lines.push({ label: `${t().revSurchargeLabel} (${L(volume)} · ${Ls(urgency)})`, value: surcharge });
+  }
+
+  const min = total * 0.85;
+  const max = total * 1.3;
+
+  return { total, min, max, count, volume, urgency, lines, baseSum };
+}
+
+function getRevisionTimeLabel(volumeId, urgencyId){
+  const T = t();
+  if(urgencyId === "asap") return T.revTimeToday;
+  if(urgencyId === "urgent") return T.revTimeUrgent;
+  if(volumeId === "medium") return T.revTimeMedium;
+  if(volumeId === "large") return T.revTimeLarge;
+  return T.revTimeSmall;
+}
+
+function revBadgeInfo(count){
+  const T = t();
+  if(count === 0) return { label: "—", cls: "" };
+  if(count <= 2) return { label: T.revBadgeQuick, cls: "" };
+  if(count <= 5) return { label: T.revBadgeMedium, cls: "mid" };
+  return { label: T.revBadgeLarge, cls: "high" };
+}
+
+let lastPriceRev = 0;
+function recalcRevisions(){
+  const T = t();
+  const r = computeRevisionTotals();
+
+  const priceMainEl = document.getElementById("revPriceMain");
+  animatePrice(priceMainEl, lastPriceRev, r.total, "rev");
+  lastPriceRev = r.total;
+
+  document.getElementById("revPriceMinWrap").innerHTML = `${T.min} <b id="revPriceMin">$${fmt(r.min)}</b>`;
+  document.getElementById("revPriceAvgWrap").innerHTML = `${T.avg} <b id="revPriceAvg">$${fmt(r.total)}</b>`;
+  document.getElementById("revPriceMaxWrap").innerHTML = `${T.max} <b id="revPriceMax">$${fmt(r.max)}</b>`;
+
+  document.getElementById("revStatTime").textContent = r.count ? getRevisionTimeLabel(r.volume.id, r.urgency.id) : "—";
+  document.getElementById("revStatCount").textContent = r.count;
+  document.getElementById("revStatUrgency").textContent = r.count ? Ls(r.urgency) : "—";
+
+  const badge = document.getElementById("revBadge");
+  const info = revBadgeInfo(r.count);
+  badge.textContent = info.label;
+  badge.className = "badge" + (info.cls ? " " + info.cls : "");
+
+  const desc = document.getElementById("revSummaryDesc");
+  desc.textContent = r.count ? T.revSummaryDesc(r.count, L(r.volume), Ls(r.urgency)) : T.revSummaryDescEmpty;
+
+  const receipt = document.getElementById("revReceiptList");
+  receipt.innerHTML = !r.count
+    ? `<div class="receipt-empty">${T.revReceiptEmpty}</div>`
+    : r.lines.map(l => `<div class="receipt-item"><span>${l.label}</span><span>${l.value === null ? T.revCustomQuote : "$" + fmt(l.value)}</span></div>`).join("");
 }
 
 /* =========================================================
@@ -956,6 +1247,187 @@ function onDownload(){
         ${contact.email ? T.lblEmail + ": " + contact.email + "<br>" : ""}
         ${contact.company ? T.lblCompany + ": " + contact.company + "<br>" : ""}
         ${contact.comment ? T.lblComment + ": " + contact.comment : ""}
+      </div>
+
+      <p class="muted no-print">${T.pdfPrintHint}</p>
+      <script>window.onload = () => window.print();<\/script>
+    </body>
+    </html>
+  `);
+  win.document.close();
+}
+
+/* =========================================================
+   REVISIONS: FORM VALIDATION + SUBMIT
+========================================================= */
+function bindRevForm(){
+  document.getElementById("revBtnSubmit").addEventListener("click", onRevSubmit);
+  document.getElementById("revBtnPdf").addEventListener("click", onRevDownload);
+  document.getElementById("revBtnCta").addEventListener("click", () => {
+    const el = document.getElementById("rUrl");
+    el.scrollIntoView({ behavior: "smooth", block: "center" });
+    el.focus();
+  });
+}
+
+function validateRevForm(){
+  const T = t();
+  let valid = true;
+
+  ["rUrl", "rName", "rPhone", "rComment"].forEach(clearFieldError);
+
+  const url = document.getElementById("rUrl");
+  const name = document.getElementById("rName");
+  const phone = document.getElementById("rPhone");
+  const comment = document.getElementById("rComment");
+
+  if(!url.value.trim()){ setFieldError("rUrl", T.errUrl); valid = false; }
+  if(!name.value.trim()){ setFieldError("rName", T.errName); valid = false; }
+  const phoneDigits = phone.value.replace(/\D/g, "");
+  if(phoneDigits.length < 9){ setFieldError("rPhone", T.errPhone); valid = false; }
+  if(!comment.value.trim()){ setFieldError("rComment", T.errComment); valid = false; }
+  if(state.revEditTypes.size === 0){ showToast(T.errRevType, "error"); valid = false; }
+
+  return valid;
+}
+
+function getRevFormData(){
+  return {
+    url: document.getElementById("rUrl").value.trim(),
+    name: document.getElementById("rName").value.trim(),
+    phone: document.getElementById("rPhone").value.trim(),
+    telegram: document.getElementById("rTelegram").value.trim(),
+    email: document.getElementById("rEmail").value.trim(),
+    comment: document.getElementById("rComment").value.trim()
+  };
+}
+
+function buildRevConfigSummary(){
+  const r = computeRevisionTotals();
+  return {
+    generatedAt: new Date().toISOString(),
+    lang: state.lang,
+    editTypes: [...state.revEditTypes].map(id => L(REVISIONS.editTypes.find(x => x.id === id))),
+    volume: L(r.volume),
+    urgency: L(r.urgency),
+    priceEstimate: { min: Math.round(r.min), avg: Math.round(r.total), max: Math.round(r.max) },
+    timeEstimate: getRevisionTimeLabel(r.volume.id, r.urgency.id),
+    lineItems: r.lines
+  };
+}
+
+async function onRevSubmit(){
+  const T = t();
+  if(!validateRevForm()) return;
+
+  const contact = getRevFormData();
+  const config = buildRevConfigSummary();
+
+  const btn = document.getElementById("revBtnSubmit");
+  const originalText = btn.textContent;
+  btn.textContent = T.toastSending;
+  btn.disabled = true;
+
+  try{
+    if(TELEGRAM_CONFIG.enabled){
+      await sendRevisionsToTelegram({ contact, config });
+    }
+    showToast(T.revToastSuccess, "success");
+    document.getElementById("revFinishNote").textContent = T.revFinishNote(contact.name, config.priceEstimate.avg);
+  } catch(err){
+    showToast(T.toastTelegramFail, "error");
+    console.error(err);
+  } finally{
+    btn.textContent = originalText;
+    btn.disabled = false;
+  }
+}
+
+async function sendRevisionsToTelegram(payload){
+  const { contact, config } = payload;
+  const text = [
+    `🛠 Заявка на правки сайту`,
+    `Сайт: ${contact.url}`,
+    `Ім'я: ${contact.name}`,
+    `Телефон: ${contact.phone}`,
+    contact.telegram ? `Telegram: ${contact.telegram}` : null,
+    contact.email ? `Email: ${contact.email}` : null,
+    `—`,
+    `Правки: ${config.editTypes.join(", ") || "—"}`,
+    `Обсяг: ${config.volume}`,
+    `Терміновість: ${config.urgency}`,
+    `Орієнтовна ціна: $${fmt(config.priceEstimate.avg)} (${fmt(config.priceEstimate.min)}–${fmt(config.priceEstimate.max)})`,
+    `Термін: ${config.timeEstimate}`,
+    `Опис: ${contact.comment}`
+  ].filter(Boolean).join("\n");
+
+  const token = _resolveToken();
+  if(!token) throw new Error("Telegram token unavailable");
+
+  const url = `https://api.telegram.org/bot${token}/sendMessage`;
+  const res = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ chat_id: TELEGRAM_CONFIG.chatId, text })
+  });
+  if(!res.ok) throw new Error("Telegram API error: " + res.status);
+}
+
+function onRevDownload(){
+  const T = t();
+  if(state.revEditTypes.size === 0){
+    showToast(T.errRevType, "error");
+    return;
+  }
+  const contact = getRevFormData();
+  const config = buildRevConfigSummary();
+  const win = window.open("", "_blank");
+  const rows = config.lineItems.map(l => `<tr><td>${l.label}</td><td class="num">${l.value === null ? T.revCustomQuote : "$" + fmt(l.value)}</td></tr>`).join("");
+
+  win.document.write(`
+    <html lang="${state.lang}">
+    <head>
+      <meta charset="UTF-8">
+      <title>${T.revPdfTitle}</title>
+      <style>
+        body{ font-family: Arial, sans-serif; padding:40px; color:#12141F; }
+        h1{ font-size:22px; margin-bottom:4px; }
+        .muted{ color:#6B7086; font-size:13px; margin-bottom:24px; }
+        table{ width:100%; border-collapse:collapse; margin-bottom:24px; }
+        td, th{ padding:8px 10px; border-bottom:1px solid #E6E8F0; font-size:13px; text-align:left; }
+        td.num, th.num{ text-align:right; font-variant-numeric: tabular-nums; }
+        .total-row td{ font-weight:bold; font-size:15px; border-top:2px solid #12141F; border-bottom:none; }
+        .price-box{ background:#F4F5FA; border-radius:12px; padding:18px; margin-bottom:24px; }
+        .price-box b{ font-size:24px; }
+        .contact{ font-size:13px; line-height:1.6; }
+        @media print{ .no-print{ display:none; } }
+      </style>
+    </head>
+    <body>
+      <h1>${T.revPdfTitle}</h1>
+      <p class="muted">${T.pdfGenerated}: ${new Date().toLocaleString(state.lang === "en" ? "en-US" : "uk-UA")}</p>
+
+      <div class="price-box">
+        <div>${T.revPriceLabel}</div>
+        <b>$${fmt(config.priceEstimate.avg)}</b>
+        <div class="muted">${T.pdfRange}: $${fmt(config.priceEstimate.min)} – $${fmt(config.priceEstimate.max)} · ${T.pdfTerm}: ${config.timeEstimate}</div>
+      </div>
+
+      <h3>${T.pdfComposition}</h3>
+      <table>
+        <tr><th>${T.pdfItem}</th><th class="num">${T.pdfCost}</th></tr>
+        ${rows}
+        <tr class="total-row"><td>${T.pdfTotal}</td><td class="num">$${fmt(config.priceEstimate.avg)}</td></tr>
+      </table>
+
+      <h3>${T.pdfContact}</h3>
+      <div class="contact">
+        ${T.lblUrl.replace(" *", "")}: ${contact.url || "—"}<br>
+        ${T.lblName.replace(" *", "")}: ${contact.name || "—"}<br>
+        ${T.lblPhone.replace(" *", "")}: ${contact.phone || "—"}<br>
+        ${contact.telegram ? T.lblTelegram + ": " + contact.telegram + "<br>" : ""}
+        ${contact.email ? T.lblEmail + ": " + contact.email + "<br>" : ""}
+        ${T.lblRComment.replace(" *", "")}: ${contact.comment || "—"}
       </div>
 
       <p class="muted no-print">${T.pdfPrintHint}</p>
